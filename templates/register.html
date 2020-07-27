@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+
+
+{% block head %}
+<title>register</title>
+{% endblock %}
+
+
+{% block body %}
+<button style="float: right" onclick="window.location.href='login'">Login</button><br>
+<div class="content" style="text-align: center;">
+	<h1 style="text-align: center;">Register</h1>
+	<br>
+	<form name="register" id="register" method="POST" action="/register">
+		<input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+		Username:<br><input type="text" name="uname" id="uname" required><br>
+		Password:<br><input type="password" name="pword" id="pword" required><br>
+		2FA:<br><input type="number" name="2fa" id="2fa" required><br><br>
+		<input type="submit" name="submit", value="Register"><br><br>
+		<strong style="color: red" id="success">{{ message }}</strong>
+	</form>
+</div>
+{% endblock %}

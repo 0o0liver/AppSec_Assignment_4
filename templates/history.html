@@ -1,0 +1,36 @@
+{% extends 'base.html' %}
+
+{% block head %}
+<title>History</title>
+{% endblock %}
+
+{% block body %}
+<button style="float: left" onclick="window.location.href='spell_check'">Spell Check</button>
+<button style="float: right" onclick="window.location.href='logout'">Logout</button><br>
+<div class="content" style="text-align: center;">
+	<h1 style="text-align: center;">History</h1>
+	{% if username == "admin" %}
+		<form id="userquery" name="userquery" method="POST" action="/history">
+			<input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+			Username: <input type="text" name="username" id="username">
+			<input type="submit" name="submit" value="Retrieve">
+		</form>
+		{% if after_post %}
+			<h4 style="text-align: center;" id="numqueries">Number of Query Submitted: {{ row_len }}</h4>
+			{% for row in rows %}
+				<a href="history/query{{row['id']}}" id="query{{row['id']}}" style="text-align: center;">{{row['query']}}</a><br><br>
+			{% endfor %}
+		{% else %}
+			<h4 style="text-align: center;" id="numqueries">Number of Query Submitted: {{ row_len }}</h4>
+			{% for row in rows %}
+				<a href="history/query{{row['id']}}" id="query{{row['id']}}" style="text-align: center;">{{row['query']}}</a><br><br>
+			{% endfor %}
+		{% endif %}
+	{% else %}
+		<h4 style="text-align: center;" id="numqueries">Number of Query Submitted: {{ row_len }}</h4>
+		{% for row in rows %}
+			<a href="history/query{{row['id']}}" id="query{{row['id']}}" style="text-align: center;">{{row['query']}}</a><br><br>
+		{% endfor %}
+	{% endif %}
+</div>
+{% endblock %}

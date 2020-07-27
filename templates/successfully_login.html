@@ -1,0 +1,12 @@
+{% extends 'base.html' %}
+
+{% block head %}
+<title>Successfully Login</title>
+<meta http-equiv="refresh" content="3; url = {{url_for('spell_check')}}">
+{% endblock %}
+
+{% block body %}
+<div id="content" style="text-align: center;">
+	<h1 id="result">Login Success! Redirecting to home page ...</h1>
+</div>
+{% endblock %}

@@ -1,0 +1,29 @@
+{% extends 'base.html' %}
+
+{% block head %}
+<title>Login History</title>
+{% endblock %}
+
+{% block body %}
+<button style="float: left" onclick="window.location.href='spell_check'">Spell Check</button>
+<button style="float: right" onclick="window.location.href='logout'">Logout</button><br>
+<div class="content" style="text-align: center">
+	<h1>Login History</h1>
+	<form id="userid" method="POST" action="/login_history">
+		<input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+		Username: <input type="text" name="userid" id="userid">
+		<input type="submit" name="submit" value="Retrieve">
+	</form>
+	{% if after_post %}
+		<ul>
+			{% for row in rows %}
+				<li id="login{{row['id']}}">
+					Login time: <i id="login{{row['id']}}_time">{{row['login_time']}}</i>
+					Logout time: <i id="logout{{row['id']}}_time">{{row['logout_time']}}</i>
+				</li><br>
+			{% endfor %}
+		</ul>
+	{% endif %}
+</div>
+
+{% endblock %}

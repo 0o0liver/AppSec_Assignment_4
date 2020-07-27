@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+
+{% block head %}
+<title>Query Review</title>
+{% endblock %}
+
+{% block body %}
+<button style="float: left" onclick="window.location.href='../spell_check'">Spell Check</button>
+<button style="float: right" onclick="window.location.href='../logout'">Logout</button><br>
+<div class="content" style="text-align: center;">
+	<h1 style="text-align: center;">Query Review</h1>
+	<h3>Query ID:</h3>
+	<h4 id="queryid">{{rows[0]["id"]}}</h4>
+	<h3>Submitter:</h3>
+	<h4 id="username">{{rows[0]["submitter"]}}</h4>
+	<h3>Query Text:</h3>
+	<h4 id="querytext">{{rows[0]["query"]}}</h4>
+	<h3>Query Result:</h3>
+	<h4 id="queryresults">{{rows[0]["result"]}}</h4>
+</div>
+{% endblock %}

@@ -1,0 +1,28 @@
+{% extends 'base.html' %}
+
+
+{% block head %}
+<title>login</title>
+{% endblock %}
+
+
+{% block body %}
+<button style="float: right" onclick="window.location.href='register'">Register</button><br>
+<div class="content" style="text-align: center;">
+	<h1 style="text-align: center;">Login</h1>
+	<br>
+	<form name="login" id="login" method="POST" action="/login">
+		<input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+		Username:<br><input type="text" name="uname" id="uname" required><br>
+		Password:<br><input type="password" name="pword" id="pword" required><br>
+		2FA:<br><input type="number" name="2fa" id="2fa" required><br><br>
+		<input type="submit" name="submit", value="Login" style="text">
+	</form>
+	<h4 style="color: red; text-align: center;" id="result">{{ message }}</h4>
+	{% if message == "Login Success!" %}
+		<h4 style="text-align: center;">
+			<a href="/spell_check">Launch Application</a>
+		</h4>
+	{% endif %}
+</div>
+{% endblock %}

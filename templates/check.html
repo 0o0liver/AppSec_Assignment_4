@@ -1,0 +1,35 @@
+{% extends 'base.html' %}
+
+
+{% block head %}
+<title>Spell Check</title>
+{% endblock %}
+
+{% block body %}
+<button style="float: left" onclick="window.location.href='history'">History</button>
+<button style="float: right" onclick="window.location.href='logout'">Logout</button>
+{% if username == "admin" %}
+	<div class="wrapper" style="text-align: center;">
+		<button onclick="window.location.href='login_history'">Login History</button>
+	</div>
+{% endif %}
+<br>
+<div class="content" style="text-align: center;">
+	<h1 style="text-align: center;">Spell Check</h1>
+	<form name="spell_check" id="spell_check" method="POST" action="/spell_check">
+		<input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+		Input Text:<br> 
+		<textarea rows="20" cols="35" name="inputtext" id="inputtext"></textarea><br><br>
+		<input type="submit" name="submit" value="check">
+	</form>
+	{% if input_text != "" and error == ""%}
+		<h2 style="text-align: center;">Text:</h2>
+		<h4 style="text-align: center;" id="textout">{{ input_text }}</h4>
+		<h2 style="text-align: center;">Misspelled:</h2>
+		<h4 style="text-align: center;" id="misspelled">{{ ",".join(misspelled) }}</h4>
+	{% endif %}
+	{% if error != "" %}
+		<h2 style="text-align: center; color: red;" id="error">{{ error }}</h2>
+	{% endif %}
+</div>
+{% endblock %}
