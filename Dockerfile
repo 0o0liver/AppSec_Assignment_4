@@ -1,11 +1,15 @@
-FROM python:3.5.2-alpine
+FROM ubuntu:16.04
 
-WORKDIR /app 
+RUN apt-get update && \ 
+	apt-get -y upgrade && \
+	apt-get install -y python3-pip
 
-ADD . /app
+WORKDIR /app
 
-RUN pip install -r requirements.txt
+COPY . /app 
+
+RUN pip3 install -r /app/requirements.txt
 
 EXPOSE 5000
 
-CMD ["python", "app.py"]
+CMD ["python3", "app.py"]
