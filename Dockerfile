@@ -1,16 +1,11 @@
-FROM ubuntu:16.04
-
-RUN apt-get update -y && \
-	apt-get install -y python-pip python-dev
-
-COPY ./requirements.txt /app/requirements.txt
+FROM python:3.5.2-alpine
 
 WORKDIR /app 
 
-RUN pip3 install -r requirements.txt 
+ADD . /app
 
-COPY . /app 
+RUN pip install -r requirements.txt
 
-ENTRYPOINT [ "python" ]
+EXPOSE 5000
 
-CMD [ "app.py" ]
+CMD ["python", "app.py"]
