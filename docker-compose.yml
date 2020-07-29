@@ -1,4 +1,4 @@
-version: '3'
+version: '3.8'
 
 services:
   spell_check_service:
@@ -6,3 +6,9 @@ services:
     build: .
     ports:
       - 8080:5000
+    secrets:
+      - secret_key
+
+secrets:
+  secret_key:
+    file: root_secret_key.txt
