@@ -18,9 +18,11 @@ class user:
 
 # Global Storage
 app = Flask(__name__)
-#app.secret_key = urandom(16)
-password_file = open("/run/secrets/secret_key", "r")
-app.secret_key = password_file.read()
+try:
+	password_file = open("/run/secrets/secret_key", "r")
+	app.secret_key = password_file.read()
+except FileNotFoundError:
+	app.secret_key = "This default key is only for testing purposes."
 app.config.update(
 	SESSION_COOKIE_SAMESITE = 'Lax'
 )
