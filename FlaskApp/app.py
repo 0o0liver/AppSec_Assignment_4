@@ -38,28 +38,28 @@ def login():
 	message = ""
 
 	if request.method == "POST":
-		try:
-			username = request.form['uname']
-			password = request.form['pword']
-			mfa = request.form['2fa']
-			with sqlite3.connect("database.db") as conn:
-				conn.row_factory = sqlite3.Row
-				if ( not user_exist(username, conn) or not correct_password(username, password, conn)):
-					message = "Username or Password Incorrect!"
-					return render_template('login.html', message=message), 400
-					conn.close()
-				if ( not correct_2fa(username, mfa, conn)):
-					message = "Two-factor authentication failure!"
-					return render_template('login.html', message=message), 400
-					conn.close()
-				login_user(username, conn)
-				session["username"] = username
-				return render_template('successfully_login.html')
+		#try:
+		username = request.form['uname']
+		password = request.form['pword']
+		mfa = request.form['2fa']
+		with sqlite3.connect("database.db") as conn:
+			conn.row_factory = sqlite3.Row
+			if ( not user_exist(username, conn) or not correct_password(username, password, conn)):
+				message = "Username or Password Incorrect!"
+				return render_template('login.html', message=message), 400
 				conn.close()
-		except:
-			message = "Failure: something else is wrong!"
-			return render_template('login.html', message=message), 500
+			if ( not correct_2fa(username, mfa, conn)):
+				message = "Two-factor authentication failure!"
+				return render_template('login.html', message=message), 400
+				conn.close()
+			login_user(username, conn)
+			session["username"] = username
+			return render_template('successfully_login.html')
 			conn.close()
+		#except:
+		#	message = "Failure: something else is wrong!"
+		#	return render_template('login.html', message=message), 500
+		#	conn.close()
 	else:
 		return render_template('login.html', message=message)
 
@@ -68,30 +68,30 @@ def register():
 	message = ""
 
 	if request.method == "POST":
+		#try:
+		username = request.form['uname']
+		password = request.form['pword']
+		#retype_password = request.form['rpword']
+		mfa = request.form['2fa']
+		# Check if password match up
+		#if (password != retype_password):
+		#	message = "Failure: Password doesn't match!"
+		#	return render_template('register.html', message=message), 400
+		# Every check is passed, registering new user
 		try:
-			username = request.form['uname']
-			password = request.form['pword']
-			#retype_password = request.form['rpword']
-			mfa = request.form['2fa']
-			# Check if password match up
-			#if (password != retype_password):
-			#	message = "Failure: Password doesn't match!"
-			#	return render_template('register.html', message=message), 400
-			# Every check is passed, registering new user
-			try:
-				with sqlite3.connect("database.db") as conn:
-					register_new_user(username, password, mfa, conn)
-					message = "Success!"
-					return render_template('register.html', message=message)
-					conn.close()
-			except sqlite3.IntegrityError:
-				message = "Failure: User already exist!"
-				return render_template('register.html', message=message), 400
+			with sqlite3.connect("database.db") as conn:
+				register_new_user(username, password, mfa, conn)
+				message = "Success!"
+				return render_template('register.html', message=message)
 				conn.close()
-		except:
-			message = "Failure: something else is wrong!"
-			return render_template('register.html', message=message), 500
+		except sqlite3.IntegrityError:
+			message = "Failure: User already exist!"
+			return render_template('register.html', message=message), 400
 			conn.close()
+		#except:
+		#	message = "Failure: something else is wrong!"
+		#	return render_template('register.html', message=message), 500
+		#	conn.close()
 	else:
 		return render_template('register.html', message = message)
 
