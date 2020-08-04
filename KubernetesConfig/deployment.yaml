@@ -1,0 +1,26 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: spell-check
+spec:
+  selector:
+    matchLabels:
+      app: spell-check
+  replicas: 4
+  template:
+    matadata:
+      labels:
+        app: spell-check
+    spec:
+      containers:
+      - name: spell-check
+        image: 0o0riley/spell-check:for_k8s
+        imagePullPolicy: IfNotPresent
+        ports:
+        - containerPort: 5000
+        env:
+        - name: ROOT_SECRET_KEY
+          valueFrom:
+            secretKeyRef:
+              name: flask-app-secret
+              key: root-key

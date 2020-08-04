@@ -18,16 +18,23 @@ class user:
 
 # Global Storage
 app = Flask(__name__)
+
 try:
-	password_file = open("/run/secrets/secret_key", "r")
-	app.secret_key = password_file.read()
+	if os.environ.get('ROOT_SECRET_KEY') != None:
+		app.secret_key = os.environ.get('ROOT_SECRET_KEY')
+		print("Kubernete Secret Key Used.")
+	else:
+		password_file = open("/run/secrets/secret_key", "r")
+		app.secret_key = password_file.read()
+		print("Docker Secret Key Used.")
 except FileNotFoundError:
 	app.secret_key = "This default key is only for testing purposes."
+	print("Default Secret Key Used.")
+
 app.config.update(
 	SESSION_COOKIE_SAMESITE = 'Lax'
 )
 csrf = CSRFProtect(app)
-users = dict()
 
 # Route
 @app.route('/login', methods=['GET', 'POST'])
