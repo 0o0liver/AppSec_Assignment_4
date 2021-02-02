@@ -1,5 +1,5 @@
 # Spell Checking Web Application
-Travis Build Status: [![Build Status](https://travis-ci.org/0o0liver/AppSec_Assignment_4.svg?branch=master)](https://travis-ci.org/0o0liver/AppSec_Assignment_4)
+Travis Build Status: [![Build Status](https://travis-ci.org/0o0liver/Spell_Check.svg?branch=master)](https://travis-ci.org/0o0liver/Spell_Check)
 ## Deploy using public Docker Image
 The Docker Image of this application is published on Docker Hub, it can be accessed at [0o0riley/spell-check](https://hub.docker.com/repository/docker/0o0riley/spell-check). There are three tags for this image, both ```for_k8s``` and ```signed``` are signed tags, it is suggested to use either one of these two tags. However, all tags are generated from the same root image. To deploy the spell check service, be sure to create a ```Docker Secret``` called ```secret_key```. Command for deploying is 
 ```
